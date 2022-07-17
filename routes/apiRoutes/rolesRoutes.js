@@ -4,20 +4,10 @@ const db = require('../../db/connection');
 
 // Get all roles
 router.get('/roles', (req, res) => {
-  const sql = `SELECT * FROM roles`;
-  db.query(sql, (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: rows
-    });
-  });
+  
 });
 
-// Get a single row
+// Get a single role
 router.get('/roles/:id', (req, res) => {
   const sql = `SELECT * FROM roles WHERE id = ?`;
   const params = [req.params.id];

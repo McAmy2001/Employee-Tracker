@@ -15,10 +15,6 @@ app.use('/api', apiRoutes);
 
 
 
-
-
-
-
 // Start server after DB connection
 db.connect(err => {
   if (err) throw err;
