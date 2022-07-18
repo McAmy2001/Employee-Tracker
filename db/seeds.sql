@@ -20,13 +20,13 @@ VALUES
     INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES 
       ('David', 'Wallace', 1, null),
-      ('Michael', 'Scott', 2, null),
-      ('Dwight', 'Schrute', 3, null),
-      ('Kelly', 'Kapoor', 4, null),
-      ('Stanley', 'Hudson', 5, null),
-      ('Phyllis', 'Lapin', 5, null),
-      ('Jim', 'Halpert', 5, null),
-      ('Angela', 'Martin', 6, null),
-      ('Oscar', 'Martinez', 6, null),
-      ('Kevin', 'Malone', 6, null),
-      ('Pam', 'Beesly', 7, null);
+      ('Michael', 'Scott', 2, 1),
+      ('Dwight', 'Schrute', 3, 2),
+      ('Kelly', 'Kapoor', 4, 2),
+      ('Stanley', 'Hudson', 5, 2),
+      ('Phyllis', 'Lapin', 5, 2),
+      ('Jim', 'Halpert', 5, 2),
+      ('Angela', 'Martin', 6, 2),
+      ('Oscar', 'Martinez', 6, 8),
+      ('Kevin', 'Malone', 6, 8),
+      ('Pam', 'Beesly', 7, 2);
