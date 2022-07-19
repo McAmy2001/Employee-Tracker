@@ -1,8 +1,5 @@
 const inquirer = require('inquirer');
 const db = require('./db/connection');
-//const viewAllDepts = require('./lib/departments');
-
-
 
 const menuListPrompt = () => {
   console.log('Please choose an option from the menu.');
@@ -45,10 +42,18 @@ const menuListPrompt = () => {
                 let deptToAdd = answer.dept;
                 addDept(deptToAdd);
               })
-          } else if (action === 'Add a role') {
-            let deptArray = getDeptArray();
-            console.log(deptArray + 'Here');
-            return inquirer
+        } else if (action === 'Add a role') {
+            const sql = `SELECT * FROM departments`;
+            db.query(sql, (err, rows) => {
+              if (err) {
+                res.status(500).json({ error: err.message });
+                return;
+              }
+                //console.log(rows);
+                const deptArray = rows.map(obj => obj.dept_name);
+                //console.log(deptArray);
+              });
+              return inquirer
               .prompt ([
                 {
                   type: 'input',
@@ -59,7 +64,13 @@ const menuListPrompt = () => {
                   type: 'input',
                   name: 'salary',
                   message: 'What is the salary for the role?'
-                },
+                },/*
+                {
+                  type: 'list',
+                  name: 'dept',
+                  message: 'Which department does the role belong to?',
+                  choices: deptArray
+                }*/
                 {
                   type: 'input',
                   name: 'dept',
@@ -68,9 +79,8 @@ const menuListPrompt = () => {
               ])
                 .then(answers => {
                   addRole(answers);
-                })
-          }
-        else {
+            })
+        } else {
           db.end(function(err) {
             if (err) {
               return console.log('error:' + err.message);
@@ -79,7 +89,7 @@ const menuListPrompt = () => {
           });
         }
       });
-    };
+};
   
 function viewAllDepts() {
   const sql = `SELECT * FROM departments`;
@@ -97,11 +107,11 @@ function viewAllRoles() {
   const sql = `SELECT roles.*, departments.dept_name AS dept_name
                 FROM roles
                 LEFT JOIN departments ON roles.dept_id = departments.id`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
       console.table(rows);
       menuListPrompt();
     });
@@ -157,28 +167,36 @@ function addDept(dept) {
 };
 
 function addRole(answers) {
-  console.log(answers.role);
-  console.log(answers.salary);
-  console.log(answers.dept);
-  //const sql = `INSERT INTO roles ()`
-  menuListPrompt();
-};
-
-function getDeptArray() {
-  const sql = `SELECT dept_name FROM departments`;
-  db.query(sql, (err, rows) => {
+  //console.log(answers);
+  //console.log(answers.role, answers.salary, answers.dept);
+  const sql = `INSERT INTO roles (job_title, salary, dept_id)
+               VALUES (?,?,?)`;
+  const params = [answers.role, answers.salary, 1];
+  console.log(params);
+  db.query(sql, params, (err, result) => {
     if (err) {
-      res.status(500).json({ error: err.message });
+      console.log('Error');
+      //res.status(400).json({ error: err.message });
       return;
     }
-    const deptArray = [];
-    rows.forEach(function(e) {
-      deptArray.push(e.dept_name.value);
-    })
-    console.log(deptArray);
+    console.log(answers.role + ' added to ' + answers.dept + ' department.');
+    menuListPrompt();
+  });
+};
 
-  })
-}
+//function  getDeptArray() {
+//  const sql = `SELECT dept_name FROM departments`;
+//  db.query(sql, (err, rows) => {
+//    if (err) {
+//      res.status(500).json({ error: err.message });
+//      return;
+//    }
+//    let deptArray = [];
+//    deptArray = rows.map(obj => obj.dept_name);
+//    //console.log(deptArray);
+//    return deptArray;
+//  })
+//};
 
 menuListPrompt();
 
