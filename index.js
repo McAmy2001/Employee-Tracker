@@ -10,98 +10,101 @@ const menuListPrompt = () => {
         name: 'action',
         message: 'Please choose an option from the menu.',
         choices: ['View all departments',
-                  'View all roles',
-                  'View all employees by ID#',
-                  'View all employees by last name',
-                  'Add a department',
-                  'Add a role',
-                  'Add an employee',
-                  'Update an employee\'s role',
-                  'End Employee Tracker session'
-                ]
+          'View all roles',
+          'View all employees by ID#',
+          'View all employees by last name',
+          'Add a department',
+          'Add a role',
+          'Add an employee',
+          'Update an employee\'s role',
+          'End Employee Tracker session'
+        ]
       })
-      .then(({action}) => {
-        console.log(action);
-        if (action === 'View all departments') {
-          viewAllDepts();
-        } else if (action === 'View all roles') {
-          viewAllRoles();
-        } else if (action === 'View all employees by ID#') {
-          viewAllEmployees();
-        } else if (action === 'View all employees by last name') {
-          empByLastName();
-        } else if (action === 'Add a department') {
-          return inquirer
-            .prompt (
+    .then(({ action }) => {
+      console.log(action);
+      if (action === 'View all departments') {
+        viewAllDepts();
+      } else if (action === 'View all roles') {
+        viewAllRoles();
+      } else if (action === 'View all employees by ID#') {
+        viewAllEmployees();
+      } else if (action === 'View all employees by last name') {
+        empByLastName();
+      } else if (action === 'Add a department') {
+        return inquirer
+          .prompt(
+            {
+              type: 'input',
+              name: 'dept',
+              message: 'Name of department to add:'
+            })
+          .then(answer => {
+            let deptToAdd = answer.dept;
+            addDept(deptToAdd);
+          })
+      } else if (action === 'Add a role') {
+        let deptArray = [];
+        const sql = `SELECT * FROM departments`;
+        db.query(sql, (err, rows) => {
+          if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+          }
+          console.log(rows);
+          const deptArray = rows.map(obj => {return {value: obj.id, name: obj.dept_name}; });
+          console.log(deptArray);
+
+          inquirer
+            .prompt([
               {
                 type: 'input',
+                name: 'role',
+                message: 'Name of role to add:'
+              },
+              {
+                type: 'input',
+                name: 'salary',
+                message: 'What is the salary for the role?'
+              },
+              {
+                type: 'list',
                 name: 'dept',
-                message: 'Name of department to add:'
-              })
-              .then(answer => {
-                let deptToAdd = answer.dept;
-                addDept(deptToAdd);
-              })
-        } else if (action === 'Add a role') {
-            const sql = `SELECT * FROM departments`;
-            db.query(sql, (err, rows) => {
-              if (err) {
-                res.status(500).json({ error: err.message });
-                return;
+                message: 'Which department does the role belong to?',
+                choices: deptArray
               }
-                //console.log(rows);
-                const deptArray = rows.map(obj => obj.dept_name);
-                //console.log(deptArray);
-              });
-              return inquirer
-              .prompt ([
-                {
-                  type: 'input',
-                  name: 'role',
-                  message: 'Name of role to add:'
-                },
-                {
-                  type: 'input',
-                  name: 'salary',
-                  message: 'What is the salary for the role?'
-                },/*
-                {
-                  type: 'list',
-                  name: 'dept',
-                  message: 'Which department does the role belong to?',
-                  choices: deptArray
-                }*/
-                {
-                  type: 'input',
-                  name: 'dept',
-                  message: 'Which department does the role belong to?'
-                }
-              ])
-                .then(answers => {
-                  addRole(answers);
+              //{
+              //  type: 'input',
+              //  name: 'dept',
+              //  message: 'Which department does the role belong to?'
+              //}
+            ])
+            .then(answers => {
+              console.log(`Hey! ${answers}`);
+              addRole(answers);
             })
-        } else {
-          db.end(function(err) {
-            if (err) {
-              return console.log('error:' + err.message);
-            }
-            console.log('Goodbye, have a great day!');
-          });
-        }
-      });
+        });
+      } else {
+        db.end(function (err) {
+          if (err) {
+            return console.log('error:' + err.message);
+          }
+          console.log('Goodbye, have a great day!');
+        });
+      }
+    });
 };
-  
+
 function viewAllDepts() {
   const sql = `SELECT * FROM departments`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
-      console.table(rows);
-      menuListPrompt();
-    });
-  };
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    console.table(rows);
+    menuListPrompt();
+  });
+};
 
 function viewAllRoles() {
   const sql = `SELECT roles.*, departments.dept_name AS dept_name
@@ -112,9 +115,9 @@ function viewAllRoles() {
       res.status(500).json({ error: err.message });
       return;
     }
-      console.table(rows);
-      menuListPrompt();
-    });
+    console.table(rows);
+    menuListPrompt();
+  });
 };
 
 function viewAllEmployees() {
@@ -124,14 +127,14 @@ function viewAllEmployees() {
               LEFT JOIN roles ON e.role_id = roles.id
               LEFT JOIN departments ON roles.dept_id = departments.id
               LEFT JOIN employees AS m ON e.manager_id = m.id`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-       return;
-      }
-      console.table(rows);
-      menuListPrompt();
-    });
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    console.table(rows);
+    menuListPrompt();
+  });
 };
 
 function empByLastName() {
@@ -142,14 +145,14 @@ function empByLastName() {
               LEFT JOIN departments ON roles.dept_id = departments.id
               LEFT JOIN employees AS m ON e.manager_id = m.id
               ORDER BY e.last_name`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-       return;
-      }
-      console.table(rows);
-      menuListPrompt();
-    });
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    console.table(rows);
+    menuListPrompt();
+  });
 };
 
 function addDept(dept) {
@@ -171,7 +174,7 @@ function addRole(answers) {
   //console.log(answers.role, answers.salary, answers.dept);
   const sql = `INSERT INTO roles (job_title, salary, dept_id)
                VALUES (?,?,?)`;
-  const params = [answers.role, answers.salary, 1];
+  const params = [answers.role, answers.salary, 1/*answers.dept.id*/];
   console.log(params);
   db.query(sql, params, (err, result) => {
     if (err) {
