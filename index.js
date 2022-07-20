@@ -43,14 +43,14 @@ const menuListPrompt = () => {
             addDept(deptToAdd);
           })
       } else if (action === 'Add a role') {
-        let deptArray = [];
+        // Get dept array for inquirer choices
         const sql = `SELECT * FROM departments`;
         db.query(sql, (err, rows) => {
           if (err) {
             res.status(500).json({ error: err.message });
             return;
           }
-          const deptArray = rows.map(obj => {return {value: obj.id, name: obj.dept_name}; });
+          const deptArray = rows.map(obj => { return { value: obj.id, name: obj.dept_name }; });
 
           inquirer
             .prompt([
@@ -74,7 +74,60 @@ const menuListPrompt = () => {
             .then(answers => {
               addRole(answers);
             })
-        });
+        })
+      } else if (action === 'Add an employee') {
+        // Get role Array for inquirer choices
+        let sql = `SELECT id, job_title FROM roles`;
+        db.query(sql, (err, rows) => {
+          if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+          }
+          //console.log(rows);
+          const roleArray = rows.map(obj => { return { value: obj.id, name: obj.job_title } })
+          // Get manager array for inqirer choices from employee table
+          let sql = `SELECT id, first_name, last_name FROM employees`;
+          db.query(sql, (err, rows) => {
+            if (err) {
+              res.status(500).json({ error: err.message });
+              return;
+            }
+            const managerArray = rows.map(obj => { return { value: obj.id, name: (obj.first_name + ' ' + obj.last_name) } });
+            //console.log(managerArray);
+            //console.log(roleArray);
+
+            inquirer
+              .prompt([
+                {
+                  type: 'input',
+                  name: 'first_name',
+                  message: 'What is the employee\'s first name?'
+                },
+                {
+                  type: 'input',
+                  name: 'last_name',
+                  message: "What is the employee\'s last name?"
+                },
+                {
+                  type: 'list',
+                  name: 'role',
+                  message: 'What is the employee\'s role',
+                  choices: roleArray
+                },
+                {
+                  type: 'list',
+                  name: 'manager',
+                  message: 'Who is the employee\'s manager?',
+                  choices: managerArray
+                }
+              ])
+              .then(answers => {
+                addEmployee(answers);
+              })
+          })
+        })
+      } else if (action === 'Update an employee\'s role') {
+        updateRole();
       } else {
         db.end(function (err) {
           if (err) {
@@ -175,6 +228,24 @@ function addRole(answers) {
     menuListPrompt();
   });
 };
+
+function addEmployee(empInfo) {
+  const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+              VALUES (?,?,?,?)`;
+  const params = [empInfo.first_name, empInfo.last_name, empInfo.role, empInfo.manager];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    console.log('Employee ' + empInfo.first_name + ' ' + empInfo.last_name + ' added.');
+    menuListPrompt();
+  })
+};
+
+function updateRole() {
+  // 
+}
 
 
 menuListPrompt();

@@ -15,7 +15,8 @@ VALUES
     ('Customer Service Manager', 100000, 3),
     ('Salesperson', 100000, 4),
     ('Accountant', 100000, 5),
-    ('Receptionist', 100000, 6);
+    ('Receptionist', 100000, 6),
+    ('Office Manager', 100000, 2);
 
     INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES 
