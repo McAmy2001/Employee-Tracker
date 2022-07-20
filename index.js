@@ -27,7 +27,7 @@ const menuListPrompt = () => {
         ]
       })
     .then(({ action }) => {
-      // Sens actions to their respective functions
+      // Send actions to their respective functions
       if (action === 'View all departments') {
         viewAllDepts();
       } else if (action === 'View all roles') {
@@ -137,7 +137,15 @@ function addDept() {
       {
         type: 'input',
         name: 'dept',
-        message: 'Name of department to add:'
+        message: 'Name of department to add:',
+        validate: deptInput => {
+          if (deptInput) {
+            return true;
+          } else {
+            console.log('Please enter a depatment name.');
+            return false;
+          }
+        }
       })
       .then(answer => {
         //let deptToAdd = answer.dept;
@@ -170,12 +178,28 @@ function addRole() {
         {
           type: 'input',
           name: 'role',
-          message: 'Name of role to add:'
+          message: 'Name of role to add:',
+          validate: roleInput => {
+            if (roleInput) {
+              return true;
+            } else {
+              console.log('Please enter the role you want to add.');
+              return false;
+            }
+          }
         },
         {
           type: 'input',
           name: 'salary',
-          message: 'What is the salary for the role?'
+          message: 'What is the salary for the role?',
+          validate: salaryInput => {
+            if (salaryInput) {
+              return true;
+            } else {
+              console.log('Please enter the salary for the role.');
+              return false;
+            }
+          }
         },
         {
           type: 'list',
@@ -226,12 +250,28 @@ function addEmployee() {
           {
             type: 'input',
             name: 'first_name',
-            message: 'What is the employee\'s first name?'
+            message: 'What is the employee\'s first name?',
+            validate: first_nameInput => {
+              if (first_nameInput) {
+                return true;
+              } else {
+                console.log('Please enter the employee\'s first name');
+                return false;
+              }
+            }
           },
           {
             type: 'input',
             name: 'last_name',
-            message: "What is the employee\'s last name?"
+            message: "What is the employee\'s last name?",
+            validate: last_nameInput => {
+              if (last_nameInput) {
+                return true;
+              } else {
+                console.log('Please enter the employee\'s last name.');
+                return false;
+              }
+            }
           },
           {
             type: 'list',
