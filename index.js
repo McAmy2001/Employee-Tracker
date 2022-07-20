@@ -83,8 +83,8 @@ const menuListPrompt = () => {
             res.status(500).json({ error: err.message });
             return;
           }
-          //console.log(rows);
           const roleArray = rows.map(obj => { return { value: obj.id, name: obj.job_title } })
+
           // Get manager array for inqirer choices from employee table
           let sql = `SELECT id, first_name, last_name FROM employees`;
           db.query(sql, (err, rows) => {
@@ -93,8 +93,6 @@ const menuListPrompt = () => {
               return;
             }
             const managerArray = rows.map(obj => { return { value: obj.id, name: (obj.first_name + ' ' + obj.last_name) } });
-            //console.log(managerArray);
-            //console.log(roleArray);
 
             inquirer
               .prompt([
@@ -244,8 +242,53 @@ function addEmployee(empInfo) {
 };
 
 function updateRole() {
-  // 
-}
+  // Get employee array for inquirer choices
+  let sql = `SELECT id, first_name, last_name FROM employees`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    const empArray = rows.map(obj => { return { value: obj.id, name: (obj.first_name + ' ' + obj.last_name) } });
+    // Get role array for inquirer choices
+    let sql = `SELECT id, job_title FROM roles`;
+    db.query(sql, (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      const roleArray = rows.map(obj => { return { value: obj.id, name: obj.job_title } });
+
+      inquirer
+        .prompt([
+          {
+            type: 'list',
+            name: 'employee',
+            message: 'Which employee has an updated role?',
+            choices: empArray
+          },
+          {
+            type: 'list',
+            name: 'new_role',
+            message: 'What is the employee\'s new role?',
+            choices: roleArray
+          }
+        ]).then(answers => {
+          let sql = `UPDATE employees
+                        SET role_id = ${answers.new_role}
+                      WHERE id = ${answers.employee}`;
+          db.query(sql, (err, result) => {
+            if (err) {
+              res.status(400).json({ error: err.message });
+              return;
+            }
+            console.log('Role updated');
+            menuListPrompt();
+          })
+        })
+    })
+  })
+};
 
 
 menuListPrompt();
