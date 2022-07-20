@@ -12,9 +12,17 @@ Watch a demo [here](https://drive.google.com/file/d/1Ng-i0209suUOmBlQsLFBNULnZQR
 - [Testing](#tests)
 - [Questions](#questions)
 ## Installation 
-Clone the repository from GitHub and clone it to a local folder. Install node.js on your local machine. From the root of the project folder do an npm install to get the package dependecies.  
+Clone the repository from GitHub onto your machine in a local folder. Install node.js: [Installation Guide](https://coding-boot-camp.github.io/full-stack/nodejs/how-to-install-nodejs). From the root of the project folder do an npm (Node Package Manager) install to get the package dependencies (type `npm install` on the command line).  
 ## Usage 
-Start the program by typing node index on the command line. You will be presented with a menu of options. Use the up and down arrows to choose what you'd like to do. Answer any questions presented to you and then the results will be displayed in the terminal. The main menu will return. When you've done all the options you want to do choose the 'End Employee Tracker Session' option and the program will close.
+Start the program by typing `node index` on the command line. You will be presented with a menu of options. Use the up and down arrows to choose what you'd like to do. Answer any questions presented to you and then the results will be displayed in the terminal. The main menu will return. When you've done all the options you want to do choose the 'End Employee Tracker Session' option and the program will close.
+
+![Screenshot1](./assets/Screen%20Shot%202022-07-20%20at%205.59.17%20PM%20Small.jpeg)
+![Screenshot2](./assets/Screen%20Shot%202022-07-20%20at%205.59.36%20PM%20Small.jpeg)
+![Screenshot3](./assets/Screen%20Shot%202022-07-20%20at%206.00.05%20PM%20Small.jpeg)
+![Screenshot4](./assets/Screen%20Shot%202022-07-20%20at%206.00.34%20PM%20Small.jpeg)
+![Screenshot5](./assets/Screen%20Shot%202022-07-20%20at%206.01.13%20PM%20Small.jpeg)
+![Screenshot6](./assets/Screen%20Shot%202022-07-20%20at%206.01.41%20PM%20Small.jpeg)
+
 ## License 
 &copy; 2022 by Amy McCabe. 
 This project is licensed under the MIT license.
