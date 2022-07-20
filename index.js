@@ -50,9 +50,7 @@ const menuListPrompt = () => {
             res.status(500).json({ error: err.message });
             return;
           }
-          console.log(rows);
           const deptArray = rows.map(obj => {return {value: obj.id, name: obj.dept_name}; });
-          console.log(deptArray);
 
           inquirer
             .prompt([
@@ -72,14 +70,8 @@ const menuListPrompt = () => {
                 message: 'Which department does the role belong to?',
                 choices: deptArray
               }
-              //{
-              //  type: 'input',
-              //  name: 'dept',
-              //  message: 'Which department does the role belong to?'
-              //}
             ])
             .then(answers => {
-              console.log(`Hey! ${answers}`);
               addRole(answers);
             })
         });
@@ -170,36 +162,20 @@ function addDept(dept) {
 };
 
 function addRole(answers) {
-  //console.log(answers);
-  //console.log(answers.role, answers.salary, answers.dept);
   const sql = `INSERT INTO roles (job_title, salary, dept_id)
                VALUES (?,?,?)`;
-  const params = [answers.role, answers.salary, 1/*answers.dept.id*/];
+  const params = [answers.role, answers.salary, answers.dept];
   console.log(params);
   db.query(sql, params, (err, result) => {
     if (err) {
-      console.log('Error');
-      //res.status(400).json({ error: err.message });
+      res.status(400).json({ error: err.message });
       return;
     }
-    console.log(answers.role + ' added to ' + answers.dept + ' department.');
+    console.log(answers.role + ' role added.');
     menuListPrompt();
   });
 };
 
-//function  getDeptArray() {
-//  const sql = `SELECT dept_name FROM departments`;
-//  db.query(sql, (err, rows) => {
-//    if (err) {
-//      res.status(500).json({ error: err.message });
-//      return;
-//    }
-//    let deptArray = [];
-//    deptArray = rows.map(obj => obj.dept_name);
-//    //console.log(deptArray);
-//    return deptArray;
-//  })
-//};
 
 menuListPrompt();
 
