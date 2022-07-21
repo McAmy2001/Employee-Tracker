@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## This is a command line program that connects to a company staff database and displays requested information in tables. Users can search database information, add information, and delete information from the command line. 
 
-Watch a demo [here](https://drive.google.com/file/d/1Ng-i0209suUOmBlQsLFBNULnZQR58xyG/view?usp=sharing).
+Watch a demo [here](https://drive.google.com/file/d/1eY53Ts_SpbI8EfKOuU5_KY3YrN5s2ONN/view?usp=sharing).
 
 ## Table of Contents:
 - [Installation](#installation)
@@ -16,12 +16,10 @@ Clone the repository from GitHub onto your machine in a local folder. Install no
 ## Usage 
 Start the program by typing `node index` on the command line. You will be presented with a menu of options. Use the up and down arrows to choose what you'd like to do. Answer any questions presented to you and then the results will be displayed in the terminal. The main menu will return. When you've done all the options you want to do choose the 'End Employee Tracker Session' option and the program will close.
 
-![Screenshot1](./assets/Screen%20Shot%202022-07-20%20at%205.59.17%20PM%20Small.jpeg)
-![Screenshot2](./assets/Screen%20Shot%202022-07-20%20at%205.59.36%20PM%20Small.jpeg)
-![Screenshot3](./assets/Screen%20Shot%202022-07-20%20at%206.00.05%20PM%20Small.jpeg)
-![Screenshot4](./assets/Screen%20Shot%202022-07-20%20at%206.00.34%20PM%20Small.jpeg)
-![Screenshot5](./assets/Screen%20Shot%202022-07-20%20at%206.01.13%20PM%20Small.jpeg)
-![Screenshot6](./assets/Screen%20Shot%202022-07-20%20at%206.01.41%20PM%20Small.jpeg)
+![Screenshot1](./assets/Screen%20Shot%202022-07-20%20at%208.44.26%20PM%20Medium.jpeg)
+![Screenshot2](./assets/Screen%20Shot%202022-07-20%20at%208.45.11%20PM%20Medium.jpeg)
+![Screenshot3](./assets/Screen%20Shot%202022-07-20%20at%208.45.37%20PM%20Medium.jpeg)
+
 
 ## License 
 &copy; 2022 by Amy McCabe. 
