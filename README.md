@@ -1,6 +1,6 @@
-# Employee Tracker
+# Bootcamp Module 12: SQL Challenge: Employee Tracker
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-## This is a command line program that connects to a company staff database and displays requested information in tables. Users can search database information, add information, and delete information from the command line. 
+## This is a command line program that connects to a company staff database and displays requested information in tables. Users can search database information, add information, and delete information from the command line. All code is my own. 
 
 Watch a demo [here](https://drive.google.com/file/d/1eY53Ts_SpbI8EfKOuU5_KY3YrN5s2ONN/view?usp=sharing).
 
