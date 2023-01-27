@@ -1,16 +1,23 @@
-# Bootcamp Module 12: SQL Challenge: Employee Tracker
+# Command Line Employee Tracker
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## This is a command line program that connects to a company staff database and displays requested information in tables. Users can search database information, add information, and delete information from the command line. All code is my own. 
 
 Watch a demo [here](https://drive.google.com/file/d/1ov36Aefa2VhTnuU6X6BHd4s9-JGG2BYk/view?usp=sharing).
 
 ## Table of Contents:
+- [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 - [Contributing](#contributing)
 - [Testing](#tests)
 - [Questions](#questions)
+## Technologies
+- Javascript
+- [Express.js](https://expressjs.com/)
+- [Inquirer](https://www.npmjs.com/package/inquirer)
+- [MySQL2](https://www.npmjs.com/package/mysql2)
+- [console.table](https://www.npmjs.com/package/console.table)
 ## Installation 
 Clone the repository from GitHub onto your machine in a local folder. Install node.js: [Installation Guide](https://coding-boot-camp.github.io/full-stack/nodejs/how-to-install-nodejs). From the root of the project folder do an npm (Node Package Manager) install to get the package dependencies (type `npm install` on the command line).  
 ## Usage 
